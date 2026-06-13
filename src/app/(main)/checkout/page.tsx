@@ -24,8 +24,8 @@ export default function CheckoutPage() {
   const subtotal = items.reduce((acc, item) => {
     // Determinar qué precio usar en base a la cantidad
     let priceToUse = item.producto.precioUnitario;
-    if (item.cantidad >= 1000) priceToUse = item.producto.precioMillar;
-    else if (item.cantidad >= 12) priceToUse = item.producto.precioDocena;
+    if (item.cantidad >= 1000) priceToUse = item.producto.precioCajon ?? item.producto.precioUnitario;
+    else if (item.cantidad >= 12) priceToUse = item.producto.precioDocena ?? item.producto.precioUnitario;
     
     return acc + (priceToUse * item.cantidad);
   }, 0);
@@ -108,8 +108,8 @@ export default function CheckoutPage() {
                 {items.map((item) => (
                   <div key={item.producto.id} className="flex gap-4 p-3 bg-soft rounded-2xl border border-border/50">
                     <div className="w-16 h-16 rounded-xl bg-white border border-border/50 flex items-center justify-center p-2 shrink-0">
-                      {item.producto.imageUrl ? (
-                        <Image src={item.producto.imageUrl} alt={item.producto.nombre} width={40} height={40} className="object-contain" />
+                      {item.producto.imagenes && item.producto.imagenes.length > 0 ? (
+                        <Image src={item.producto.imagenes[0]} alt={item.producto.nombre} width={40} height={40} className="object-contain" />
                       ) : (
                         <span className="text-[8px] text-muted-foreground font-bold">IMG</span>
                       )}
