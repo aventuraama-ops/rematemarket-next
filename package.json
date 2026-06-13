@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@insforge/sdk": "^1.4.0",
     "@radix-ui/react-accordion": "^1.2.13",
     "@radix-ui/react-dialog": "^1.1.16",
     "class-variance-authority": "^0.7.1",
