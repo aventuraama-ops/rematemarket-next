@@ -15,8 +15,6 @@ export const metadata: Metadata = {
   description: "Importadora Directa: Stock Real y Precios de Remate",
 };
 
-export const runtime = "edge";
-
 export default function RootLayout({
   children,
 }: Readonly<{

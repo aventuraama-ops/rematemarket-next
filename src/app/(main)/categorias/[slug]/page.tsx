@@ -1,12 +1,14 @@
-"use client";
-
-import { use } from "react";
 import Link from "next/link";
 import { mockProductos } from "@/infrastructure/mock/productos";
 import { ProductB2BCard } from "@/components/ui/ProductB2BCard";
 
-export default function CategoriaVitrinaPage({ params }: { params: Promise<{ slug: string }> }) {
-  const resolvedParams = use(params);
+export async function generateStaticParams() {
+  const slugs = Array.from(new Set(mockProductos.map(p => p.categoriaSlug)));
+  return slugs.map(slug => ({ slug }));
+}
+
+export default async function CategoriaVitrinaPage({ params }: { params: Promise<{ slug: string }> }) {
+  const resolvedParams = await params;
   // Filtramos los productos según el slug de la categoría y ordenamos por stock decreciente
   const productosFiltrados = mockProductos
     .filter(p => p.categoriaSlug === resolvedParams.slug)
