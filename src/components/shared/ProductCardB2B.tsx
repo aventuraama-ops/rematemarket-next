@@ -35,7 +35,7 @@ export function ProductCardB2B({ producto, onAdd }: Props) {
 
       {/* Imagen */}
       <Link
-        href={`/productos/${producto.slug}`}
+        href={`/producto/${producto.slug}`}
         className="relative aspect-square overflow-hidden bg-soft p-4"
       >
         <img
@@ -49,7 +49,7 @@ export function ProductCardB2B({ producto, onAdd }: Props) {
       {/* Contenido */}
       <div className="flex flex-1 flex-col p-4">
         <Link
-          href={`/productos/${producto.slug}`}
+          href={`/producto/${producto.slug}`}
           className="line-clamp-2 text-[14px] font-bold tracking-tight hover:text-primary"
         >
           {producto.nombre}
@@ -89,7 +89,7 @@ export function ProductCardB2B({ producto, onAdd }: Props) {
             </motion.button>
           ) : (
             <Link
-              href={`/productos/${producto.slug}`}
+              href={`/producto/${producto.slug}`}
               className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-foreground px-4 py-2.5 text-[13px] font-semibold text-background transition-colors hover:bg-foreground/90"
             >
               <Eye className="size-4" /> Ver producto

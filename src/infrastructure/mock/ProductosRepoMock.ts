@@ -6,4 +6,9 @@ export class ProductosRepoMock implements IProductosRepository {
   async getAll(): Promise<Producto[]> {
     return mockProductos;
   }
+
+  async getBySlug(slug: string): Promise<Producto | null> {
+    const producto = mockProductos.find(p => p.slug === slug);
+    return producto || null;
+  }
 }

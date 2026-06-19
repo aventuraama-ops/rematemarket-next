@@ -36,12 +36,12 @@ const YoutubeIcon = ({ className }: { className?: string }) => (
 
 const links: { label: string; href: string }[] = [
   { label: "Inicio", href: "/" },
-  { label: "Categorías", href: "/categorias" },
   { label: "Remate del Mes", href: "/remate-del-mes" },
-  { label: "Importa con nosotros", href: "/importa-con-nosotros" },
+  { label: "Categorías", href: "/categorias" },
+  { label: "Importa con Nosotros", href: "/importa-con-nosotros" },
   { label: "Sorteo", href: "/sorteo" },
-  { label: "Nosotros", href: "/nosotros" },
   { label: "Ayuda", href: "/ayuda" },
+  { label: "Nosotros", href: "/nosotros" },
 ];
 
 export function Navbar() {
@@ -74,11 +74,7 @@ export function Navbar() {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "border-b border-foreground/5 bg-background/85 backdrop-blur-xl"
-            : "border-b border-transparent bg-background/0"
-        }`}
+        className="fixed inset-x-0 top-0 z-50 border-b border-foreground/8 bg-soft shadow-sm transition-all duration-300"
       >
         <div className="container-rm flex h-[78px] items-center justify-between gap-6">
           {/* 1. LOGO */}
@@ -99,10 +95,10 @@ export function Navbar() {
               type="button"
               onClick={() => setSearchOpen(true)}
               aria-label="Buscar"
-              className="flex items-center gap-2 rounded-full border border-border bg-soft px-4 py-2 text-[13px] text-muted-foreground transition-colors hover:bg-foreground/5 hover:text-foreground"
+              className="flex items-center gap-2 rounded-full border border-border bg-white px-5 py-2.5 text-[13px] min-w-[220px] text-muted-foreground transition-colors hover:bg-foreground/5 hover:text-foreground"
             >
               <Search className="size-4" />
-              <span>Buscar...</span>
+              <span className="flex-1 text-left text-muted-foreground">Buscar productos...</span>
             </button>
 
             {/* 3-8. LINKS */}
@@ -115,8 +111,8 @@ export function Navbar() {
                     href={l.href}
                     className={`text-[13px] transition-colors ${
                       isActive
-                        ? "text-foreground font-semibold"
-                        : "font-medium text-foreground/75 hover:text-foreground"
+                        ? "text-primary font-semibold"
+                        : "text-ink font-medium hover:text-primary"
                     }`}
                   >
                     {l.label}
@@ -129,37 +125,28 @@ export function Navbar() {
             <div className="flex items-center gap-1.5 border-l border-border pl-6">
               <a
                 href="#"
-                className={`grid size-8 place-items-center rounded-full transition-colors hover:bg-foreground/5 ${
-                  scrolled ? "text-foreground/60 hover:text-[#FF0000]" : "text-[#FF0000]"
-                }`}
+                className="grid size-8 place-items-center rounded-full bg-foreground/5 text-primary hover:bg-primary hover:text-white transition-colors"
               >
                 <YoutubeIcon className="size-[18px]" />
               </a>
               <a
                 href="#"
-                className={`grid size-8 place-items-center rounded-full transition-colors hover:bg-foreground/5 ${
-                  scrolled ? "text-foreground/60 hover:text-[#E1306C]" : "text-[#E1306C]"
-                }`}
+                className="grid size-8 place-items-center rounded-full bg-foreground/5 text-primary hover:bg-primary hover:text-white transition-colors"
               >
                 <InstagramIcon className="size-[18px]" />
               </a>
               <a
                 href="#"
-                className={`grid size-8 place-items-center rounded-full transition-colors hover:bg-foreground/5 ${
-                  scrolled ? "text-foreground/60 hover:text-[#1877F2]" : "text-[#1877F2]"
-                }`}
+                className="grid size-8 place-items-center rounded-full bg-foreground/5 text-primary hover:bg-primary hover:text-white transition-colors"
               >
                 <FacebookIcon className="size-[18px]" />
               </a>
               <a
                 href="#"
-                className={`grid size-8 place-items-center rounded-full transition-colors hover:bg-foreground/5 ${
-                  scrolled ? "text-foreground/60 hover:text-foreground" : "text-white"
-                }`}
+                className="grid size-8 place-items-center rounded-full bg-foreground/5 text-primary hover:bg-primary hover:text-white transition-colors"
               >
                 <TikTokIcon className="size-[16px]" />
               </a>
-
             </div>
 
 
@@ -167,7 +154,7 @@ export function Navbar() {
             <Link
               href="/carrito"
               aria-label="Ver carrito"
-              className="relative ml-2 grid size-10 place-items-center rounded-full bg-soft text-foreground/80 transition-colors hover:bg-foreground/10 hover:text-foreground"
+              className="relative ml-2 grid size-10 place-items-center rounded-full text-ink transition-colors hover:bg-foreground/10 hover:text-primary"
             >
               <ShoppingCart className="size-[18px]" />
               {cartCount > 0 && (
@@ -186,7 +173,7 @@ export function Navbar() {
           <button
             type="button"
             onClick={() => setOpen(true)}
-            className="grid size-11 place-items-center rounded-full border border-foreground/10 xl:hidden"
+            className="grid size-11 place-items-center rounded-full border border-foreground/20 xl:hidden"
             aria-label="Abrir menú"
           >
             <Menu className="size-5" />

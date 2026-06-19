@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search,
@@ -46,7 +47,10 @@ function formatSoles(n: number) {
 }
 
 // ─── Página ───────────────────────────────────────────────────────────────────
-export default function CarritoPage() {
+function CarritoContent() {
+  const searchParams = useSearchParams();
+  const initCategoria = searchParams.get("categoria") || "";
+
   const addItem = useCartStore((state) => state.addItem);
   const cart = useCartStore((state) => state.cart);
   const cartIsEmpty = useCartStore((state) => state.isEmpty);
@@ -55,7 +59,7 @@ export default function CarritoPage() {
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [filtros, setFiltros] = useState<Filtros>({
     busqueda: "",
-    categoriaSlug: "",
+    categoriaSlug: initCategoria,
     enRemate: false,
     soloStock: true,
   });
@@ -330,5 +334,13 @@ export default function CarritoPage() {
         )}
       </AnimatePresence>
     </div>
+  );
+}
+
+export default function CarritoPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-background" />}>
+      <CarritoContent />
+    </Suspense>
   );
 }

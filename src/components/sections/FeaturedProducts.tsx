@@ -114,8 +114,8 @@ function ProductCard({ p, index }: { p: Producto; index: number }) {
 }
 
 export function FeaturedProducts() {
-  const featured = mockProductos.filter((p) => p.destacado).slice(0, 4);
-  const liquidation = mockProductos.filter((p) => p.enRemate || p.stock <= 2).slice(0, 4);
+  const featured = mockProductos.filter((p) => p.destacado && !p.pendiente).slice(0, 4);
+  const liquidation = mockProductos.filter((p) => (p.enRemate || p.stock <= 2) && !p.pendiente).slice(0, 4);
 
   return (
     <section id="productos" className="bg-soft py-20 lg:py-28">

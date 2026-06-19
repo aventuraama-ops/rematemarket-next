@@ -3,6 +3,12 @@
 
 export type UnidadVenta = "unidad" | "docena" | "cajon";
 
+export type PrecioVolumen = {
+  etiqueta: string;    // "1 und", "Docena (12)", "Ciento (100)", "1 caja (20 und)"
+  cantidad: number;    // Cantidad numérica para ordenar
+  precio: number;      // Precio en PEN
+};
+
 export type Producto = {
   id: string;
   sku: string;
@@ -23,6 +29,9 @@ export type Producto = {
   descuentoPct?: number;        // 0-99
   campaniaId?: string;
   tablaDeMedidas?: Record<string, string>[];
+  preciosPorVolumen?: PrecioVolumen[];  // Tabla de precios escalonados
+  notaProducto?: string;               // Ej: "Incluye casco y guantes de regalo"
+  pendiente?: boolean;                 // Si true: NO mostrar en UI (ej: Péptidos)
 };
 
 /** Calcula el precio según la unidad de venta */

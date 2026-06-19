@@ -8,8 +8,8 @@ export default function SorteoLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="dark min-h-screen flex flex-col">
-      {/* Navbar will now be in dark mode (white text) so it's visible over the dark page */}
+    <div className="bg-white min-h-screen flex flex-col">
+      {/* Navbar adapts to light mode automatically because of bg-soft in global Navbar */}
       <Navbar />
       
       {/* Sorteo Content wrapped in its specific scoping class */}

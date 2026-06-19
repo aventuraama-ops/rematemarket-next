@@ -23,7 +23,7 @@ function CategoriaCard({ cat, index }: { cat: Categoria; index: number }) {
         transition={{ type: "spring", stiffness: 280, damping: 22 }}
       >
         <Link
-          href={`/categorias/${cat.slug}`}
+          href={`/carrito?categoria=${cat.slug}`}
           className="group relative block overflow-hidden rounded-2xl border border-border bg-card shadow-card hover:shadow-lift"
         >
           {/* Imagen */}
@@ -144,7 +144,7 @@ export default function CategoriasPage() {
                 { valor: "+800", etiqueta: "Clientes atendidos" },
                 { valor: "6", etiqueta: "Categorías activas" },
                 { valor: "+500", etiqueta: "Productos en stock" },
-                { valor: "24h", etiqueta: "Tiempo de respuesta" },
+                { valor: "<1h", etiqueta: "Tiempo de respuesta" },
               ].map((stat) => (
                 <div key={stat.etiqueta} className="flex flex-col items-center gap-1 bg-ink/80 px-6 py-8 text-center backdrop-blur-md">
                   <span className="text-4xl font-black tracking-tight text-white">{stat.valor}</span>
@@ -168,7 +168,7 @@ export default function CategoriasPage() {
               </h2>
               <p className="max-w-lg text-[15px] leading-relaxed text-muted-foreground font-medium">
                 Si tienes un producto en mente y no está en nuestro catálogo, lo importamos para ti.
-                Cuéntanos qué necesitas y calculamos el precio en 24 horas.
+                Cuéntanos qué necesitas y calculamos el precio de forma inmediata.
               </p>
               <div className="mt-4 flex flex-wrap justify-center gap-4">
                 <CTA href="/cotizar">Cotizar mi pedido</CTA>
@@ -177,7 +177,7 @@ export default function CategoriasPage() {
                 </CTA>
               </div>
               <div className="mt-6 flex flex-wrap justify-center gap-4">
-                {["Sin cobro inmediato", "Respuesta en 24h", "Envío a todo Perú"].map((item) => (
+                {["Sin cobro inmediato", "Respuesta Inmediata", "Envío a todo Perú"].map((item) => (
                   <span key={item} className="inline-flex items-center gap-1.5 rounded-full border border-border bg-soft px-3 py-1.5 text-[12px] font-bold uppercase tracking-wider text-ink">
                     <CheckCircle2 className="w-4 h-4 text-primary" /> {item}
                   </span>

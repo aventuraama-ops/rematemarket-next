@@ -39,7 +39,7 @@ export function Hero() {
         <div className="grid items-center gap-16 lg:grid-cols-12">
           {/* Left */}
           <div className="lg:col-span-6">
-            <SectionTag variant="dark">Importadora directa</SectionTag>
+            <SectionTag variant="dark">Importa con Nosotros</SectionTag>
 
             <motion.h1
               initial={{ opacity: 0, y: 24 }}
@@ -47,9 +47,9 @@ export function Hero() {
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className="mt-6 text-balance font-display text-[44px] font-extrabold leading-[1.02] tracking-tight md:text-[60px] lg:text-[68px]"
             >
-              Tu Importadora Directa:{" "}
-              <span className="text-gradient-orange">Stock Real</span> y{" "}
-              <span className="text-gradient-orange">Precios de Remate</span>.
+              Importa con Nosotros:{" "}
+              <span className="text-gradient-orange">Club Remate</span> —{" "}
+              <span className="text-gradient-orange">Únete a los beneficios</span>.
             </motion.h1>
 
             <motion.p

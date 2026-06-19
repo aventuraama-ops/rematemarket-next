@@ -42,8 +42,8 @@
         }
 
         .ds-page-container {
-            background: var(--dark-01);
-            color: rgba(255, 255, 255, .9);
+            background: #ffffff;
+            color: var(--dark-01);
             font-family: var(--font-display);
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
@@ -507,6 +507,7 @@
                     rgba(255, 106, 0, .5) 80deg, rgba(255, 45, 0, .1) 130deg,
                     rgba(255, 255, 255, .06) 200deg, rgba(255, 255, 255, .04) 270deg, rgba(255, 45, 0, 0) 360deg);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
             padding: 1px;
@@ -606,6 +607,7 @@
                     rgba(255, 255, 255, .08) 320deg,
                     rgba(255, 255, 255, .10) 360deg);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
         }
@@ -1220,6 +1222,7 @@
                     /* pico: cabeza del cometa */
                     rgba(255, 184, 0, .6) 360deg);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
             animation: orbit-spin 3s linear infinite;
@@ -1359,6 +1362,7 @@
                     rgba(255, 255, 255, .04) 350deg,
                     rgba(255, 184, 0, 1.0) 360deg);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
             transition: background .7s cubic-bezier(.22, 1, .36, 1);
@@ -1575,6 +1579,7 @@
                     rgba(255, 255, 255, .06) 310deg,
                     rgba(255, 255, 255, .06) 360deg);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
             animation: hb-border-beat 2.4s cubic-bezier(.4, 0, .6, 1) infinite;
@@ -1765,6 +1770,7 @@
                     rgba(255, 255, 255, .06) 310deg,
                     rgba(255, 255, 255, .06) 360deg);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
             transition: opacity .15s;
@@ -1960,6 +1966,7 @@
                     rgba(255, 255, 255, .04) 270deg,
                     rgba(255, 255, 255, .07) 360deg);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
             transition: background .12s linear;

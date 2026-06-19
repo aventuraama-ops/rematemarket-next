@@ -4,18 +4,15 @@ import { useEffect, useState } from "react";
 import { PageHero } from "@/components/shared/PageHero";
 import { Reveal } from "@/components/shared/Reveal";
 import { CTA } from "@/components/shared/CTA";
+import { ProductCardB2B } from "@/components/shared/ProductCardB2B";
+import { getProductos } from "@/application/usecases/getProductos";
+import { ProductosRepoMock } from "@/infrastructure/mock/ProductosRepoMock";
+import type { Producto } from "@/domain/entities/Producto";
+import { useRouter } from "next/navigation";
+import { Flame, Package } from "lucide-react";
+import { useCartStore } from "@/providers/store-provider";
 
-// TODO: InsForge — reemplazar por SELECT * FROM productos WHERE en_remate
-const productosRemate = [
-  { nombre: "Casco para moto", precio: 89, precioOld: 137, descuento: 35 },
-  { nombre: "Sandalias verano", precio: 24, precioOld: 48, descuento: 50 },
-  { nombre: "Ventilador torre", precio: 159, precioOld: 265, descuento: 40 },
-  { nombre: "Silla plegable", precio: 49, precioOld: 70, descuento: 30 },
-  { nombre: "Zapatillas urbanas", precio: 79, precioOld: 144, descuento: 45 },
-  { nombre: "Lámpara LED", precio: 39, precioOld: 87, descuento: 55 },
-  { nombre: "Coche juguete", precio: 29, precioOld: 73, descuento: 60 },
-  { nombre: "Mesa plegable", precio: 119, precioOld: 183, descuento: 35 },
-];
+const productosRepo = new ProductosRepoMock();
 
 function useCountdown(target: number) {
   const [now, setNow] = useState(Date.now());
@@ -32,9 +29,37 @@ function useCountdown(target: number) {
 }
 
 export default function RemateDelMesPage() {
-  // Calculamos fecha a 11 dias y horas según el mock original
+  const router = useRouter();
   const [targetDate] = useState(() => Date.now() + 1000 * 60 * 60 * 24 * 11 + 1000 * 60 * 60 * 23 + 1000 * 60 * 59);
   const { d, h, m, s } = useCountdown(targetDate);
+
+  const addItem = useCartStore((state) => state.addItem);
+
+  const [productos, setProductos] = useState<Producto[]>([]);
+
+  useEffect(() => {
+    getProductos(productosRepo).then(setProductos);
+  }, []);
+
+  // Filtrado Hexagonal
+  const remates = productos.filter((p) => p.enRemate);
+  const ultimosStock = productos.filter((p) => p.stock > 0 && p.stock <= 5);
+  const tendencias = productos.filter((p) => p.destacado);
+
+  const handleProductAction = (p: Producto, unidad: any, cantidad: number) => {
+    addItem({
+      productoId: p.id,
+      sku: p.sku,
+      nombre: p.nombre,
+      categoriaSlug: p.categoriaSlug,
+      categoriaNombre: p.categoriaNombre,
+      imagen: p.imagenes[0] ?? "",
+      unidad,
+      cantidad,
+      precioUnitario: p.precioUnitario,
+    });
+    router.push("/carrito");
+  };
 
   return (
     <div className="pb-24 bg-background">
@@ -68,37 +93,57 @@ export default function RemateDelMesPage() {
       </PageHero>
 
       <section className="py-20 lg:py-28">
-        <div className="container-rm">
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {productosRemate.map((p, i) => (
-              <Reveal key={p.nombre} delay={i * 0.04}>
-                <article className="group relative overflow-hidden rounded-2xl border border-border bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-lift hover:border-primary/30">
-                  <div className="relative aspect-square overflow-hidden bg-soft p-8 flex items-center justify-center">
-                    <span className="absolute left-3 top-3 z-10 inline-flex items-center rounded-full bg-primary px-3 py-1.5 text-xs font-black text-white shadow-md">
-                      -{p.descuento}%
-                    </span>
-                    <div className="w-full h-full bg-border/40 rounded-xl flex items-center justify-center text-muted-foreground/50 font-bold uppercase tracking-widest text-[10px] group-hover:scale-105 transition-transform duration-500">
-                      Imagen Producto
-                    </div>
-                  </div>
-                  <div className="p-5">
-                    <h3 className="text-sm font-bold text-ink mb-3 line-clamp-2">{p.nombre}</h3>
-                    <div className="flex items-baseline gap-3">
-                      <span className="text-2xl font-black text-primary">
-                        S/ {p.precio}
-                      </span>
-                      <span className="text-sm font-bold text-muted-foreground line-through">
-                        S/ {p.precioOld}
-                      </span>
-                    </div>
-                  </div>
-                </article>
-              </Reveal>
-            ))}
+        <div className="container-rm flex flex-col gap-24">
+          
+          {/* SECCIÓN: ÚLTIMOS PRODUCTOS EN STOCK (FOMO) */}
+          <div>
+            <Reveal>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="inline-flex items-center gap-2 rounded-full bg-red-100 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-red-600">
+                  <Flame className="size-3.5" /> Urgencia
+                </span>
+              </div>
+              <h2 className="text-3xl font-black md:text-4xl tracking-tight text-ink mb-10">
+                Últimos productos <span className="text-red-500">en stock</span>
+              </h2>
+            </Reveal>
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {remates.slice(0, 8).map((p, i) => (
+                <Reveal key={p.id} delay={i * 0.04}>
+                  <ProductCardB2B producto={p} onAdd={(p, u, c) => handleProductAction(p, u, c)} />
+                </Reveal>
+              ))}
+            </div>
           </div>
 
+
+
+          {/* SECCIÓN: PRODUCTOS EN TENDENCIA */}
+          {tendencias.length > 0 && (
+            <div>
+              <Reveal>
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-blue-100 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-600">
+                    <Package className="size-3.5" /> Destacados
+                  </span>
+                </div>
+                <h2 className="text-3xl font-black md:text-4xl tracking-tight text-ink mb-10">
+                  Productos en <span className="text-blue-500">tendencia</span>
+                </h2>
+              </Reveal>
+              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                {tendencias.slice(0, 4).map((p, i) => (
+                  <Reveal key={p.id} delay={i * 0.04}>
+                    <ProductCardB2B producto={p} onAdd={(p, u, c) => handleProductAction(p, u, c)} />
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* BANNER FINAL */}
           <Reveal delay={0.2}>
-            <div className="mt-16 rounded-[40px] bg-gradient-to-br from-ink to-[#1a1a1a] p-10 text-center text-white md:p-20 relative overflow-hidden shadow-glow">
+            <div className="rounded-[40px] bg-gradient-to-br from-ink to-[#1a1a1a] p-10 text-center text-white md:p-20 relative overflow-hidden shadow-glow">
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/20 blur-[150px] rounded-full pointer-events-none" />
               
               <div className="relative z-10">
@@ -109,7 +154,7 @@ export default function RemateDelMesPage() {
                   Reserva con un adelanto y cancela el saldo al recibir.
                 </p>
                 <div className="flex justify-center">
-                  <CTA href="/cotizar">Cotizar ahora</CTA>
+                  <CTA href="/carrito">Ir al Carrito</CTA>
                 </div>
               </div>
             </div>

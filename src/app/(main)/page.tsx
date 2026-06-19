@@ -1,22 +1,24 @@
 import { Hero } from "@/components/sections/Hero";
-import { CampaignBanner } from "@/components/sections/CampaignBanner";
+import { RemateDelMesPreview } from "@/components/sections/RemateDelMesPreview";
 import { Categories } from "@/components/sections/Categories";
-import { FeaturedProducts } from "@/components/sections/FeaturedProducts";
-import { HowItWorks } from "@/components/sections/HowItWorks";
-import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
+import { CampaignBanner } from "@/components/sections/CampaignBanner";
+import { SorteoPreview } from "@/components/sections/SorteoPreview";
 import { Testimonials } from "@/components/sections/Testimonials";
+import { FAQ } from "@/components/sections/FAQ";
+import { NosotrosPreview } from "@/components/sections/NosotrosPreview";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 
 export default function Home() {
   return (
     <main className="flex flex-col min-h-screen">
       <Hero />
-      <CampaignBanner />
+      <RemateDelMesPreview />
       <Categories />
-      <FeaturedProducts />
-      <HowItWorks />
-      <WhyChooseUs />
+      <CampaignBanner />
+      <SorteoPreview />
       <Testimonials />
+      <FAQ />
+      <NosotrosPreview />
       <FinalCTA />
     </main>
   );

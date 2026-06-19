@@ -7,21 +7,24 @@ import { Reveal } from "@/components/shared/Reveal";
 const testimonials = [
   {
     name: "Carlos R.",
-    role: "Cliente Mayorista · Tienda online",
+    role: "Cliente Mayorista · Tienda Online",
     initials: "CR",
-    text: "Compré dos cajas de sandalias de espuma EVA para mi tienda y el margen de ganancia es excelente. Entrega puntual y producto tal cual prometen.",
+    text: "Pedí 2 docenas de Sandalias EVA para mi tienda. El margen de ganancia es excelente — compré a S/25 la unidad y las vendo a S/50. Entrega en 24h, sin complicaciones.",
+    producto: "Sandalias EVA Verano",
   },
   {
     name: "María G.",
     role: "Cliente Retail · Club Remate",
     initials: "MG",
-    text: "Me encantó que pude comprar solo una Silla de Playa a precio de importador sin tener que llevar por mayor. La calidad es tal cual la describen.",
+    text: "Compré una Silla Playera sin tener que llevar cajón completo. Calidad tal cual la describen. El precio de importación siendo clienta retail es un lujo.",
+    producto: "Silla de Descanso / Playera",
   },
   {
     name: "Jorge A.",
     role: "Distribuidor",
     initials: "JA",
-    text: "Compré mi primer lote para mi tienda y literalmente recuperé mi inversión en menos de una semana. Atención de 10.",
+    text: "Compré mi primer lote de Zapatillas Deportivas para mi tienda y recuperé la inversión en menos de una semana. Atención de 10. Ya estoy en mi tercer pedido.",
+    producto: "Zapatillas Deportivas",
   },
 ];
 
@@ -50,6 +53,9 @@ export function Testimonials() {
                 <p className="mt-5 text-[15px] leading-relaxed text-foreground/85">
                   {t.text}
                 </p>
+                <div className="mt-3 inline-flex items-center gap-1.5 self-start rounded-full bg-primary/10 px-3 py-1 text-[11px] font-semibold text-primary">
+                  <span className="size-3"><Star className="size-3 fill-primary" /></span> {t.producto}
+                </div>
 
                 <div className="mt-7 flex items-center gap-1 text-primary">
                   {Array.from({ length: 5 }).map((_, k) => (

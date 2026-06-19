@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { ArrowUpRight, AlertTriangle, AlertCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -18,7 +19,7 @@ import defaultImg from "@/assets/campaign-container.jpg";
 
 export function Categories() {
   // Aggregate stock by category
-  const categoryStats = mockProductos.reduce((acc, p) => {
+  const categoryStats = mockProductos.filter((p) => !p.pendiente).reduce((acc, p) => {
     if (!acc[p.categoriaId]) {
       acc[p.categoriaId] = {
         id: p.categoriaId,
@@ -43,6 +44,34 @@ export function Categories() {
       default: return defaultImg; // Temporary placeholder for missing images
     }
   };
+
+  // Carrusel component
+  function CarouselLoopImage({ images, alt }: { images: string[], alt: string }) {
+    const [current, setCurrent] = useState(0);
+    useEffect(() => {
+      const id = setInterval(() => {
+        setCurrent(prev => (prev + 1) % images.length);
+      }, 2500);
+      return () => clearInterval(id);
+    }, [images.length]);
+    
+    return (
+      <div className="absolute inset-0 size-full">
+        {images.map((src, i) => (
+          <Image
+            key={`${src}-${i}`}
+            src={src}
+            alt={alt}
+            width={400}
+            height={500}
+            className={`absolute inset-0 size-full object-cover transition-opacity duration-700 ${
+              i === current ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <section id="categorias" className="bg-background py-20 lg:py-28">
@@ -70,18 +99,25 @@ export function Categories() {
             return (
               <Reveal key={c.id} delay={i * 0.08}>
                 <MotionLink 
-                  href={`/categorias/${c.slug}`}
+                  href={`/carrito?categoria=${c.slug}`}
                   whileHover={!isOutOfStock ? { y: -6 } : {}}
                   transition={{ type: "spring", stiffness: 280, damping: 22 }}
                   className={`group relative block aspect-[4/5] overflow-hidden rounded-[28px] shadow-card lg:aspect-[3/4] ${isOutOfStock ? "opacity-60 grayscale hover:grayscale-0 cursor-not-allowed" : ""}`}
                 >
-                    <Image
-                      src={image}
-                      alt={c.name}
-                      width={400}
-                      height={500}
-                      className="absolute inset-0 size-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-110"
-                    />
+                    {(c.id === "cat-lic" || c.id === "cat-sal") ? (
+                      <CarouselLoopImage 
+                        images={mockProductos.filter(p => p.categoriaId === c.id && !p.pendiente).flatMap(p => p.imagenes.length ? p.imagenes : [defaultImg.src])} 
+                        alt={c.name} 
+                      />
+                    ) : (
+                      <Image
+                        src={image}
+                        alt={c.name}
+                        width={400}
+                        height={500}
+                        className="absolute inset-0 size-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-110"
+                      />
+                    )}
                     <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/30 to-transparent" />
                     
                     {/* Urgency / Out of Stock Badges */}
